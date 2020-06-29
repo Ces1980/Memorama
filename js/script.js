@@ -41,8 +41,21 @@ class Memorama {
         return Math.random() - 0.5;
       }
     }
+    // Se indica cuantas tarjetas se quieren mostrar
+    this.numeroTarjeta = this.totalTarjetas.length;
 
-    console.log(this.totalTarjetas);
+    // Se crea e inicializa la variable html como un string vacio
+    let html = '';
+
+    // Se utiliza la propiedad this.tarjetas y se recorre para mostrar en pantalla las tarjetas y
+    // en el recorrido del for se asigna a html las tarjetas a mostrar usando string literal
+    this.totalTarjetas.forEach(card => {
+      html += `<div class='tarjeta'>
+                    <img class = "tarjeta-img" src="${card.src}" alt="imagen memorama">
+              </div>`
+    });
+    //Se agregan a  contenedorTarjetas.innerHTML el valor de la variable html
+    this.$contenedorTarjetas.innerHTML = html;
 
   }
 

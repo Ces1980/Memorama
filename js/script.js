@@ -16,6 +16,7 @@ class Memorama {
     this.$contenedorGeneral = document.querySelector('.contenedor-general');
     this.$pantallaBloqueada = document.querySelector('.pantalla-bloqueada');
     this.$mensaje = document.querySelector('h2.mensaje');
+    this.$errorContenedor = document.createElement('div');
 
     // Llamado a los eventos
     this.eventos();
@@ -57,6 +58,7 @@ class Memorama {
     //Se agregan a  contenedorTarjetas.innerHTML el valor de la variable html
     this.$contenedorTarjetas.innerHTML = html;
     this.comienzaJuego();
+    this.contenedorError();
 
   }
 
@@ -129,6 +131,8 @@ class Memorama {
         // En caso de elegir cartas que no son pares se invoca al método reverso tarjetas
         this.reversoTarjetas(this.agregadorTarjetas);
         this.errores++;
+        this.incrementadorError();
+        this.derrotaJuego();
       }
       // El método splice() cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
       this.verificadorTarjetas.splice(0);
@@ -143,14 +147,37 @@ class Memorama {
       setTimeout(() => {
         // Se bloquea la pantalla y se agrega un mensaje en pantalla
         // console.log(this.$pantallaBloqueada.style.display = 'block');
-        this.$pantallaBloqueada.style.display = 'block'
-        this.$mensaje.innerText = '!Felicidades has ganado el juego.....¡'
+        this.$pantallaBloqueada.style.display = 'block';
+        this.$mensaje.innerText = '!Felicidades has ganado el juego.....¡';
       }, 1000);
       // Después de ganado el juego se reinicia el tablerp
       setTimeout(() => {
         location.reload();
       }, 4000);
     }
+  }
+
+  derrotaJuego() {
+    if (this.errores === 5) {
+      setTimeout(() => {
+        this.$pantallaBloqueada.style.display = 'block';
+        this.$mensaje.innerText = '!Huy....perdiste!!';
+      }, 1000);
+
+      setTimeout(() => {
+        location.reload();
+      }, 4000);
+    }
+  }
+
+  incrementadorError() {
+    this.$errorContenedor.innerText = `Errores: ${this.errores} / 5`;
+  }
+
+  contenedorError() {
+    this.$errorContenedor.classList.add('error');
+    this.incrementadorError();
+    this.$contenedorGeneral.appendChild(this.$errorContenedor);
   }
 
 }

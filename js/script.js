@@ -9,6 +9,7 @@ class Memorama {
     this.nivelDificultad = '';
     this.imagenesCorrectas = [];
     this.agregadorTarjetas = [];
+    this.numeroIntentos = 0;
 
     // Elementos html inicialzados desde el constructor
 
@@ -17,6 +18,7 @@ class Memorama {
     this.$pantallaBloqueada = document.querySelector('.pantalla-bloqueada');
     this.$mensaje = document.querySelector('h2.mensaje');
     this.$errorContenedor = document.createElement('div');
+    this.$nivelDificultad = document.createElement('div');
 
     // Llamado a los eventos
     this.eventos();
@@ -26,8 +28,36 @@ class Memorama {
   eventos() {
     window.addEventListener('DOMContentLoaded', () => {
       console.log('Esta escuchando a los eventos');
+      // Antes de jugar se requiere cargar la dificultad
+      this.seleccionDificultad();
       this.cargaPantalla();
+
     })
+  }
+
+  seleccionDificultad() {
+    const mensaje = prompt('Selecciona el nivel de dificultad: facil, intermedio o dificil');
+
+    if (!mensaje) {
+      this.numeroIntentos = 5;
+      this.nivelDificultad = 'Intermedio';
+    } else {
+      if (mensaje.toLowerCase() === 'facil' || mensaje.toLowerCase === 'fácil') {
+        this.numeroIntentos = 7;
+        this.nivelDificultad = 'fácil';
+      } else if (mensaje.toLowerCase() === 'intermedio') {
+        this.numeroIntentos = 5;
+        this.nivelDificultad = 'intermedio';
+      } else if (mensaje.toLowerCase() === 'dificil' || mensaje.toLowerCase === 'difícil') {
+        this.numeroIntentos = 3;
+        this.nivelDificultad = 'dificil';
+      } else {
+        this.numeroIntentos = 5;
+        this.nivelDificultad = 'intermedio';
+      }
+    }
+    this.contenedorError();
+
   }
 
   async cargaPantalla() {
@@ -58,7 +88,7 @@ class Memorama {
     //Se agregan a  contenedorTarjetas.innerHTML el valor de la variable html
     this.$contenedorTarjetas.innerHTML = html;
     this.comienzaJuego();
-    this.contenedorError();
+
 
   }
 
@@ -158,7 +188,8 @@ class Memorama {
   }
 
   derrotaJuego() {
-    if (this.errores === 5) {
+    // Nùmero de errores según la dificultad
+    if (this.errores === this.numeroIntentos) {
       setTimeout(() => {
         this.$pantallaBloqueada.style.display = 'block';
         this.$mensaje.innerText = '!Huy....perdiste!!';
@@ -171,14 +202,21 @@ class Memorama {
   }
 
   incrementadorError() {
-    this.$errorContenedor.innerText = `Errores: ${this.errores} / 5`;
+    // Se muestra la cantidad de errores en la pantalla
+    this.$errorContenedor.innerText = `Errores: ${this.errores} / ${this.numeroIntentos}`;
   }
 
   contenedorError() {
+    // Se agrega una nueva clase para mostrar los datos de error
     this.$errorContenedor.classList.add('error');
     this.incrementadorError();
+    // Se agrega en pantalla la clase error
     this.$contenedorGeneral.appendChild(this.$errorContenedor);
   }
+
+  // mensajeIntentos(){
+  //   this.
+  // }
 
 }
 

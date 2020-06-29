@@ -57,6 +57,7 @@ class Memorama {
       }
     }
     this.contenedorError();
+    this.mensajeIntentos();
 
   }
 
@@ -214,9 +215,12 @@ class Memorama {
     this.$contenedorGeneral.appendChild(this.$errorContenedor);
   }
 
-  // mensajeIntentos(){
-  //   this.
-  // }
+  mensajeIntentos() {
+
+    this.$nivelDificultad.classList.add('nivel-dificultad');
+    this.$nivelDificultad.innerHTML = `Nivel de dificultad: ${this.nivelDificultad}`;
+    this.$contenedorGeneral.appendChild(this.$nivelDificultad);
+  }
 
 }
 

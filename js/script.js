@@ -4,7 +4,7 @@ class Memorama {
   constructor() {
     this.totalTarjetas = [];
     this.numeroTarjeta = 0;
-    this.varificadorTarjeta = [];
+    this.verificadorTarjetas = [];
     this.errores = 0;
     this.nivelDificultad = '';
     this.imagenesCorrectas = [];
@@ -78,7 +78,7 @@ class Memorama {
     let sourceImage = event.target.childNodes[1].attributes[1].value;
     // Se obtieneel src de donde se encuentran resguardadas las tarjetas
     // console.log(sourceImage)
-    this.varificadorTarjeta.push(sourceImage);
+    this.verificadorTarjetas.push(sourceImage);
     // Se obtiene todo el div que contiene la la tarjeta que se seleccione
     let tarjeta = event.target;
     // console.log(tarjeta);
@@ -107,17 +107,30 @@ class Memorama {
     });
   }
 
-  reversoTarjetas() { }
+  reversoTarjetas(arregloTarjetas) {
+    arregloTarjetas.forEach(tarjeta => {
+      setTimeout(() => {
+        tarjeta.style.backgroundImage = 'url(../img/cover.jpg)';
+        tarjeta.childNodes[1].style.display = 'none';
+      }, 1000);
+    })
+  }
 
   // Método que va a permitir mantener las tarjetas volteadas o no en caso de que conicidan nuestras elecciones
   comparadorTarjetas() {
-    if (this.varificadorTarjeta.length == 2) {
-      if (this.varificadorTarjeta[0] === this.efectoVoltearTarjeta[1]) {
+    if (this.verificadorTarjetas.length == 2) {
+      // Se comparan las tarjetas a las cuales se le ha dado click
+      if (this.verificadorTarjetas[0] === this.verificadorTarjetas[1]) {
+        // Si coinciden las dos cartas electas se guardan en el arreglo de imagenes correctas
         this.fijarParAcertado(this.agregadorTarjetas);
       } else {
+        // En caso de elegir cartas que no son pares se invoca al método reverso tarjetas
         this.reversoTarjetas(this.agregadorTarjetas);
         this.errores++;
       }
+      // El método splice() cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
+      this.verificadorTarjetas.splice(0);
+      this.agregadorTarjetas.splice(0);
     }
   }
 

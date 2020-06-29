@@ -14,7 +14,7 @@ class Memorama {
 
     this.$contenedorTarjetas = document.querySelector('.contenedor-tarjetas');
     this.$contenedorGeneral = document.querySelector('.contenedor-general');
-    this.$pantallaBloqueada = document.querySelector('h2.pantallaBloqueada');
+    this.$pantallaBloqueada = document.querySelector('.pantalla-bloqueada');
     this.$mensaje = document.querySelector('h2.mensaje');
 
     // Llamado a los eventos
@@ -50,8 +50,8 @@ class Memorama {
     // Se utiliza la propiedad this.tarjetas y se recorre para mostrar en pantalla las tarjetas y
     // en el recorrido del for se asigna a html las tarjetas a mostrar usando string literal
     this.totalTarjetas.forEach(card => {
-      html += `<div class='tarjeta'>
-                    <img class = "tarjeta-img" src="${card.src}" alt="imagen memorama">
+      html += `<div class="tarjeta">
+                    <img class = "tarjeta-img" src=${card.src} alt="imagen memorama">
               </div>`
     });
     //Se agregan a  contenedorTarjetas.innerHTML el valor de la variable html
@@ -104,6 +104,8 @@ class Memorama {
       tarjeta.classList.add('acertada');
       // en el arreglo imagenes correctas se agregan con el método puch las imagenes correctas
       this.imagenesCorrectas.push(tarjeta);
+
+      this.victoriaJuego();
     });
   }
 
@@ -131,6 +133,23 @@ class Memorama {
       // El método splice() cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
       this.verificadorTarjetas.splice(0);
       this.agregadorTarjetas.splice(0);
+    }
+  }
+
+  victoriaJuego() {
+    // Se compara que el arreglo imagenesCorrectas tenga el mismo tamaño que numero tarjetas
+    if (this.imagenesCorrectas.length === this.numeroTarjeta) {
+      // Si el tamaño del arreglo es el mismo
+      setTimeout(() => {
+        // Se bloquea la pantalla y se agrega un mensaje en pantalla
+        // console.log(this.$pantallaBloqueada.style.display = 'block');
+        this.$pantallaBloqueada.style.display = 'block'
+        this.$mensaje.innerText = '!Felicidades has ganado el juego.....¡'
+      }, 1000);
+      // Después de ganado el juego se reinicia el tablerp
+      setTimeout(() => {
+        location.reload();
+      }, 4000);
     }
   }
 

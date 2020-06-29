@@ -96,7 +96,30 @@ class Memorama {
     // Se indica como se va a colocar el elemento
     event.target.childNodes[1].style.display = 'block';
   }
-  comparadorTarjetas() { }
+
+  // Agregar eh un arreglo las tarjetas acertadas
+  fijarParAcertado(arregloTarjetasAcertadas) {
+    // mediante un forEach se recorren las tarjetas y se agregan en una clase los pares de tarjetas acertadas
+    arregloTarjetasAcertadas.forEach(tarjeta => {
+      tarjeta.classList.add('acertada');
+      // en el arreglo imagenes correctas se agregan con el método puch las imagenes correctas
+      this.imagenesCorrectas.push(tarjeta);
+    });
+  }
+
+  reversoTarjetas() { }
+
+  // Método que va a permitir mantener las tarjetas volteadas o no en caso de que conicidan nuestras elecciones
+  comparadorTarjetas() {
+    if (this.varificadorTarjeta.length == 2) {
+      if (this.varificadorTarjeta[0] === this.efectoVoltearTarjeta[1]) {
+        this.fijarParAcertado(this.agregadorTarjetas);
+      } else {
+        this.reversoTarjetas(this.agregadorTarjetas);
+        this.errores++;
+      }
+    }
+  }
 
 }
 

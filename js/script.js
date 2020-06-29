@@ -72,6 +72,9 @@ class Memorama {
   }
 
   clickTarjeta(event) {
+    // Permite visualizar el reverso de la tarjeta al dar click
+    this.efectoVoltearTarjeta(event);
+
     let sourceImage = event.target.childNodes[1].attributes[1].value;
     // Se obtieneel src de donde se encuentran resguardadas las tarjetas
     // console.log(sourceImage)
@@ -85,7 +88,15 @@ class Memorama {
     this.comparadorTarjetas();
   }
 
-  coparadorTarjetas() { }
+  efectoVoltearTarjeta(event) {
+    // Se quita el backgrund image
+    event.target.style.backgroundImage = 'none';
+    // Se agrega el bg el color blanco
+    event.target.style.backgroundColor = 'white';
+    // Se indica como se va a colocar el elemento
+    event.target.childNodes[1].style.display = 'block';
+  }
+  comparadorTarjetas() { }
 
 }
 

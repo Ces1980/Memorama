@@ -56,8 +56,36 @@ class Memorama {
     });
     //Se agregan a  contenedorTarjetas.innerHTML el valor de la variable html
     this.$contenedorTarjetas.innerHTML = html;
+    this.comienzaJuego();
 
   }
+
+  comienzaJuego() {
+    // Se seleccionan todas las tarjetas
+    const tarjetas = document.querySelectorAll('.tarjeta');
+    // Se recorre con el forEach a las tarjetas para que se este al tanto a que tarjeta se le da click
+    tarjetas.forEach(tarjeta => {
+      tarjeta.addEventListener('click', event => {
+        this.clickTarjeta(event)
+      })
+    })
+  }
+
+  clickTarjeta(event) {
+    let sourceImage = event.target.childNodes[1].attributes[1].value;
+    // Se obtieneel src de donde se encuentran resguardadas las tarjetas
+    // console.log(sourceImage)
+    this.varificadorTarjeta.push(sourceImage);
+    // Se obtiene todo el div que contiene la la tarjeta que se seleccione
+    let tarjeta = event.target;
+    // console.log(tarjeta);
+    // El método unshift() agrega uno o más elementos al inicio del array, y devuelve la nueva longitud del array.
+    //Se agrega a un arreglo las tarjetas que se seleccionen y así poder voltearlas
+    this.agregadorTarjetas.unshift(tarjeta);
+    this.comparadorTarjetas();
+  }
+
+  coparadorTarjetas() { }
 
 }
 
